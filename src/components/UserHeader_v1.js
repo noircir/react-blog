@@ -1,9 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { fetchUser } from '../actions/index';
 
-// combined Action Creators, so fetchUser is removed.
+// Separate action creators for UserHeader and Posts
 
 class UserHeader extends React.Component {
+    componentDidMount() {
+        this.props.fetchUser(this.props.userId);
+    }
+
     render() {
         const { user } = this.props;
 
@@ -25,4 +30,4 @@ const mapStateToProps = (state, ownProps) => {
     return { user: state.users.find(user => user.id === ownProps.userId) };
 };
 
-export default connect(mapStateToProps)(UserHeader);
+export default connect(mapStateToProps, { fetchUser })(UserHeader);
